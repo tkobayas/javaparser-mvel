@@ -36,6 +36,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import static com.github.javaparser.utils.CodeGenerationUtils.f;
 import org.mvel3.parser.ast.expr.InlineCastExpr;
+import org.mvel3.parser.ast.expr.BigDecimalLiteralExpr;
 
 /**
  * A base class for all expressions.
@@ -879,18 +880,37 @@ public abstract class Expression extends Node {
         return scope.elidesTypeArguments() && (!nwta.getTypeArguments().isPresent() || nwta.isUsingDiamondOperator());
     }
 
+    @Generated("com.github.javaparser.generator.core.node.TypeCastingGenerator")
     public boolean isInlineCastExpr() {
         return false;
     }
 
+    @Generated("com.github.javaparser.generator.core.node.TypeCastingGenerator")
     public InlineCastExpr asInlineCastExpr() {
         throw new IllegalStateException(f("%s is not InlineCastExpr, it is %s", this, this.getClass().getSimpleName()));
     }
 
+    @Generated("com.github.javaparser.generator.core.node.TypeCastingGenerator")
     public Optional<InlineCastExpr> toInlineCastExpr() {
         return Optional.empty();
     }
 
+    @Generated("com.github.javaparser.generator.core.node.TypeCastingGenerator")
     public void ifInlineCastExpr(Consumer<InlineCastExpr> action) {
+    }
+
+    public boolean isBigDecimalLiteralExpr() {
+        return false;
+    }
+
+    public BigDecimalLiteralExpr asBigDecimalLiteralExpr() {
+        throw new IllegalStateException(f("%s is not BigDecimalLiteralExpr, it is %s", this, this.getClass().getSimpleName()));
+    }
+
+    public Optional<BigDecimalLiteralExpr> toBigDecimalLiteralExpr() {
+        return Optional.empty();
+    }
+
+    public void ifBigDecimalLiteralExpr(Consumer<BigDecimalLiteralExpr> action) {
     }
 }

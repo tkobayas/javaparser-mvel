@@ -137,6 +137,7 @@ public class InlineCastExpr extends Expression implements NodeWithType<InlineCas
         return this;
     }
 
+    @Override
     @Generated("com.github.javaparser.generator.core.node.TypeCastingGenerator")
     public void ifInlineCastExpr(Consumer<InlineCastExpr> action) {
         action.accept(this);
@@ -161,11 +162,13 @@ public class InlineCastExpr extends Expression implements NodeWithType<InlineCas
     }
 
     @Override
+    @Generated("com.github.javaparser.generator.core.node.TypeCastingGenerator")
     public boolean isInlineCastExpr() {
         return true;
     }
 
     @Override
+    @Generated("com.github.javaparser.generator.core.node.GetMetaModelGenerator")
     public InlineCastExprMetaModel getMetaModel() {
         return JavaParserMetaModel.inlineCastExprMetaModel;
     }

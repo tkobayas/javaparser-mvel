@@ -30,6 +30,7 @@ import com.github.javaparser.ast.modules.*;
 import com.github.javaparser.ast.stmt.*;
 import com.github.javaparser.ast.type.*;
 import org.mvel3.parser.ast.expr.InlineCastExpr;
+import org.mvel3.parser.ast.expr.BigDecimalLiteralExpr;
 
 /**
  * A visitor that calculates deep node equality by comparing all properties and child nodes of the node.
@@ -546,6 +547,11 @@ public class ObjectIdentityEqualsVisitor implements GenericVisitor<Boolean, Visi
 
     @Override
     public Boolean visit(final InlineCastExpr n, final Visitable arg) {
+        return n == arg;
+    }
+
+    @Override
+    public Boolean visit(final BigDecimalLiteralExpr n, final Visitable arg) {
         return n == arg;
     }
 }

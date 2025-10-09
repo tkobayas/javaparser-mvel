@@ -30,6 +30,7 @@ import com.github.javaparser.ast.modules.*;
 import com.github.javaparser.ast.stmt.*;
 import com.github.javaparser.ast.type.*;
 import org.mvel3.parser.ast.expr.InlineCastExpr;
+import org.mvel3.parser.ast.expr.BigDecimalLiteralExpr;
 
 /**
  * A visitor that returns nothing, and has default methods that are used when a specific visit method is not
@@ -549,6 +550,11 @@ public abstract class VoidVisitorWithDefaults<A> implements VoidVisitor<A> {
 
     @Override
     public void visit(final InlineCastExpr n, final A arg) {
+        defaultAction(n, arg);
+    }
+
+    @Override
+    public void visit(final BigDecimalLiteralExpr n, final A arg) {
         defaultAction(n, arg);
     }
 }
