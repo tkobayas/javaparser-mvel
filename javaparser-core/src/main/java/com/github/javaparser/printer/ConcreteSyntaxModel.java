@@ -36,6 +36,7 @@ import com.github.javaparser.printer.concretesyntaxmodel.CsmMix;
 import org.mvel3.parser.ast.expr.BigDecimalLiteralExpr;
 import org.mvel3.parser.ast.expr.BigIntegerLiteralExpr;
 import org.mvel3.parser.ast.expr.DrlNameExpr;
+import org.mvel3.parser.ast.expr.DrlxExpression;
 import org.mvel3.parser.ast.expr.InlineCastExpr;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -150,6 +151,7 @@ public class ConcreteSyntaxModel {
         concreteSyntaxModelByClass.put(BigDecimalLiteralExpr.class, sequence(comment(), attribute(ObservableProperty.VALUE), string(GeneratedJavaParserConstants.IDENTIFIER, "B")));
         concreteSyntaxModelByClass.put(BigIntegerLiteralExpr.class, sequence(comment(), attribute(ObservableProperty.VALUE), string(GeneratedJavaParserConstants.IDENTIFIER, "I")));
         concreteSyntaxModelByClass.put(DrlNameExpr.class, sequence(comment(), child(ObservableProperty.NAME)));
+        concreteSyntaxModelByClass.put(DrlxExpression.class, sequence(comment(), child(ObservableProperty.BIND), space(), string(GeneratedJavaParserConstants.COLON), space(), child(ObservableProperty.EXPR)));
         // /
         // / Statements
         // /

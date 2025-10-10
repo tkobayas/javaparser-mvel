@@ -66,6 +66,7 @@ import com.google.common.collect.ImmutableList;
 import org.mvel3.parser.ast.expr.BigDecimalLiteralExpr;
 import org.mvel3.parser.ast.expr.BigIntegerLiteralExpr;
 import org.mvel3.parser.ast.expr.DrlNameExpr;
+import org.mvel3.parser.ast.expr.DrlxExpression;
 import org.mvel3.parser.ast.expr.InlineCastExpr;
 
 public class TypeExtractor extends DefaultVisitorAdapter {
@@ -370,6 +371,11 @@ public class TypeExtractor extends DefaultVisitorAdapter {
     @Override
     public ResolvedType visit(DrlNameExpr node, Boolean solveLambdas) {
         return visit((NameExpr) node, solveLambdas);
+    }
+
+    @Override
+    public ResolvedType visit(DrlxExpression node, Boolean solveLambdas) {
+        return node.getExpr().accept(this, solveLambdas);
     }
 
     @Override

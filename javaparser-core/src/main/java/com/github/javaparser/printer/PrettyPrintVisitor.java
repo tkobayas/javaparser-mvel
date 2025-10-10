@@ -47,6 +47,7 @@ import org.mvel3.parser.ast.expr.BigDecimalLiteralExpr;
 import org.mvel3.parser.ast.expr.BigDecimalLiteralExpr;
 import org.mvel3.parser.ast.expr.BigIntegerLiteralExpr;
 import org.mvel3.parser.ast.expr.DrlNameExpr;
+import org.mvel3.parser.ast.expr.DrlxExpression;
 import org.mvel3.parser.ast.expr.InlineCastExpr;
 
 /**
@@ -797,6 +798,17 @@ public class PrettyPrintVisitor implements VoidVisitor<Void> {
             printer.print("../");
         }
         n.getName().accept(this, arg);
+    }
+
+    @Override
+    public void visit(final DrlxExpression n, final Void arg) {
+        printOrphanCommentsBeforeThisChildNode(n);
+        printComment(n.getComment(), arg);
+        if (n.getBind() != null) {
+            n.getBind().accept(this, arg);
+            printer.print(" : ");
+        }
+        n.getExpr().accept(this, arg);
     }
 
     @Override
