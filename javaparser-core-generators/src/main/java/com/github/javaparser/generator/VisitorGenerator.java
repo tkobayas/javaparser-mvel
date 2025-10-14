@@ -85,7 +85,7 @@ public abstract class VisitorGenerator extends Generator {
 
         final Optional<MethodDeclaration> existingVisitMethod = visitorClass.getMethods().stream()
                 .filter(m -> m.getNameAsString().equals("visit"))
-                .filter(m -> m.getParameter(0).getType().toString().equals(node.getTypeName()))
+                .filter(m -> m.getParameter(0).getType().toString().equals(node.getTypeNameGenerified()))
                 .findFirst();
 
         if (existingVisitMethod.isPresent()) {

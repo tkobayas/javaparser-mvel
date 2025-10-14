@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
 import static com.github.javaparser.utils.Utils.decapitalize;
 
 /**
@@ -191,7 +192,20 @@ public abstract class BaseNodeMetaModel {
      */
     public String getTypeNameGenerified() {
         if (hasWildcard) {
-            return getTypeName() + "<?>";
+            int typeParameterCount = type.getTypeParameters().length;
+            if (typeParameterCount <= 1) {
+                return getTypeName() + "<?>";
+            }
+            StringBuilder builder = new StringBuilder();
+            builder.append(getTypeName()).append('<');
+            for (int i = 0; i < typeParameterCount; i++) {
+                if (i > 0) {
+                    builder.append(", ");
+                }
+                builder.append('?');
+            }
+            builder.append('>');
+            return builder.toString();
         }
         return getTypeName();
     }
