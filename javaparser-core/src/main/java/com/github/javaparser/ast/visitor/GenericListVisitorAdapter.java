@@ -51,6 +51,9 @@ import org.mvel3.parser.ast.expr.NullSafeMethodCallExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralChunkExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralInfiniteChunkExpr;
+import org.mvel3.parser.ast.expr.AbstractContextStatement;
+import org.mvel3.parser.ast.expr.ModifyStatement;
+import org.mvel3.parser.ast.expr.WithStatement;
 
 /**
  * A visitor that has a return value of {@link List List&lt;R&gt;}, and has a default implementation for all its visit
@@ -2618,6 +2621,72 @@ public abstract class GenericListVisitorAdapter<R, A> implements GenericVisitor<
     public List<R> visit(final TemporalLiteralInfiniteChunkExpr n, final A arg) {
         List<R> result = new ArrayList<>();
         List<R> tmp;
+        if (n.getComment().isPresent()) {
+            tmp = n.getComment().get().accept(this, arg);
+            if (tmp != null)
+                result.addAll(tmp);
+        }
+        return result;
+    }
+
+    @Override
+    public List<R> visit(final AbstractContextStatement<?, ?> n, final A arg) {
+        List<R> result = new ArrayList<>();
+        List<R> tmp;
+        {
+            tmp = n.getExpressions().accept(this, arg);
+            if (tmp != null)
+                result.addAll(tmp);
+        }
+        {
+            tmp = n.getTarget().accept(this, arg);
+            if (tmp != null)
+                result.addAll(tmp);
+        }
+        if (n.getComment().isPresent()) {
+            tmp = n.getComment().get().accept(this, arg);
+            if (tmp != null)
+                result.addAll(tmp);
+        }
+        return result;
+    }
+
+    @Override
+    public List<R> visit(final ModifyStatement n, final A arg) {
+        List<R> result = new ArrayList<>();
+        List<R> tmp;
+        {
+            tmp = n.getExpressions().accept(this, arg);
+            if (tmp != null)
+                result.addAll(tmp);
+        }
+        {
+            tmp = n.getTarget().accept(this, arg);
+            if (tmp != null)
+                result.addAll(tmp);
+        }
+        if (n.getComment().isPresent()) {
+            tmp = n.getComment().get().accept(this, arg);
+            if (tmp != null)
+                result.addAll(tmp);
+        }
+        return result;
+    }
+
+    @Override
+    public List<R> visit(final WithStatement n, final A arg) {
+        List<R> result = new ArrayList<>();
+        List<R> tmp;
+        {
+            tmp = n.getExpressions().accept(this, arg);
+            if (tmp != null)
+                result.addAll(tmp);
+        }
+        {
+            tmp = n.getTarget().accept(this, arg);
+            if (tmp != null)
+                result.addAll(tmp);
+        }
         if (n.getComment().isPresent()) {
             tmp = n.getComment().get().accept(this, arg);
             if (tmp != null)

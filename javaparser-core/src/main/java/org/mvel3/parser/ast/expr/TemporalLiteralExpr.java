@@ -89,6 +89,7 @@ public class TemporalLiteralExpr extends LiteralExpr {
         return Optional.of(this);
     }
 
+    @Override
     @Generated("com.github.javaparser.generator.core.node.TypeCastingGenerator")
     public void ifTemporalLiteralExpr(Consumer<TemporalLiteralExpr> action) {
         action.accept(this);

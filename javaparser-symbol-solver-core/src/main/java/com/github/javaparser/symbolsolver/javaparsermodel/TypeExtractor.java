@@ -75,15 +75,18 @@ import org.mvel3.parser.ast.expr.HalfPointFreeExpr;
 import org.mvel3.parser.ast.expr.InlineCastExpr;
 import org.mvel3.parser.ast.expr.PointFreeExpr;
 import org.mvel3.parser.ast.expr.ListCreationLiteralExpression;
+import org.mvel3.parser.ast.expr.AbstractContextStatement;
 import org.mvel3.parser.ast.expr.ListCreationLiteralExpressionElement;
 import org.mvel3.parser.ast.expr.MapCreationLiteralExpression;
 import org.mvel3.parser.ast.expr.MapCreationLiteralExpressionKeyValuePair;
+import org.mvel3.parser.ast.expr.ModifyStatement;
 import org.mvel3.parser.ast.expr.NullSafeFieldAccessExpr;
 import org.mvel3.parser.ast.expr.NullSafeMethodCallExpr;
 import org.mvel3.parser.ast.expr.TemporalChunkExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralChunkExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralInfiniteChunkExpr;
+import org.mvel3.parser.ast.expr.WithStatement;
 
 public class TypeExtractor extends DefaultVisitorAdapter {
 
@@ -276,6 +279,21 @@ public class TypeExtractor extends DefaultVisitorAdapter {
     @Override
     public ResolvedType visit(TemporalLiteralInfiniteChunkExpr node, Boolean solveLambdas) {
         return objectReferenceType;
+    }
+
+    @Override
+    public ResolvedType visit(AbstractContextStatement<?, ?> node, Boolean solveLambdas) {
+        return ResolvedVoidType.INSTANCE;
+    }
+
+    @Override
+    public ResolvedType visit(ModifyStatement node, Boolean solveLambdas) {
+        return ResolvedVoidType.INSTANCE;
+    }
+
+    @Override
+    public ResolvedType visit(WithStatement node, Boolean solveLambdas) {
+        return ResolvedVoidType.INSTANCE;
     }
 
     @Override

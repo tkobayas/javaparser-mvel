@@ -47,6 +47,9 @@ import org.mvel3.parser.ast.expr.NullSafeMethodCallExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralChunkExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralInfiniteChunkExpr;
+import org.mvel3.parser.ast.expr.AbstractContextStatement;
+import org.mvel3.parser.ast.expr.ModifyStatement;
+import org.mvel3.parser.ast.expr.WithStatement;
 
 /**
  * A visitor that calculates a deep hash code for a node by using the hash codes of all its properties,
@@ -560,6 +563,21 @@ public class ObjectIdentityHashCodeVisitor implements GenericVisitor<Integer, Vo
 
     @Override
     public Integer visit(final TemporalLiteralInfiniteChunkExpr n, final Void arg) {
+        return n.hashCode();
+    }
+
+    @Override
+    public Integer visit(final AbstractContextStatement<?, ?> n, final Void arg) {
+        return n.hashCode();
+    }
+
+    @Override
+    public Integer visit(final ModifyStatement n, final Void arg) {
+        return n.hashCode();
+    }
+
+    @Override
+    public Integer visit(final WithStatement n, final Void arg) {
         return n.hashCode();
     }
 }

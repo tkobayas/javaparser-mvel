@@ -19,13 +19,6 @@
  */
 package com.github.javaparser.printer;
 
-import static com.github.javaparser.ast.Node.Parsedness.UNPARSABLE;
-import static com.github.javaparser.utils.PositionUtils.sortByBeginPosition;
-import static com.github.javaparser.utils.Utils.*;
-import static java.util.stream.Collectors.joining;
-import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.regex.Pattern;
 import com.github.javaparser.ast.*;
 import com.github.javaparser.ast.body.*;
 import com.github.javaparser.ast.comments.BlockComment;
@@ -48,7 +41,10 @@ import com.github.javaparser.printer.configuration.DefaultPrinterConfiguration.C
 import com.github.javaparser.printer.configuration.ImportOrderingStrategy;
 import com.github.javaparser.printer.configuration.PrinterConfiguration;
 import com.github.javaparser.printer.configuration.imports.DefaultImportOrderingStrategy;
-import org.mvel3.parser.ast.expr.BigDecimalLiteralExpr;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.regex.Pattern;
+import org.mvel3.parser.ast.expr.AbstractContextStatement;
 import org.mvel3.parser.ast.expr.BigDecimalLiteralExpr;
 import org.mvel3.parser.ast.expr.BigIntegerLiteralExpr;
 import org.mvel3.parser.ast.expr.DrlNameExpr;
@@ -61,13 +57,19 @@ import org.mvel3.parser.ast.expr.ListCreationLiteralExpression;
 import org.mvel3.parser.ast.expr.ListCreationLiteralExpressionElement;
 import org.mvel3.parser.ast.expr.MapCreationLiteralExpression;
 import org.mvel3.parser.ast.expr.MapCreationLiteralExpressionKeyValuePair;
+import org.mvel3.parser.ast.expr.ModifyStatement;
 import org.mvel3.parser.ast.expr.NullSafeFieldAccessExpr;
 import org.mvel3.parser.ast.expr.NullSafeMethodCallExpr;
+import org.mvel3.parser.ast.expr.PointFreeExpr;
 import org.mvel3.parser.ast.expr.TemporalChunkExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralChunkExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralInfiniteChunkExpr;
-import org.mvel3.parser.ast.expr.PointFreeExpr;
+import org.mvel3.parser.ast.expr.WithStatement;
+import static com.github.javaparser.ast.Node.Parsedness.UNPARSABLE;
+import static com.github.javaparser.utils.PositionUtils.sortByBeginPosition;
+import static com.github.javaparser.utils.Utils.*;
+import static java.util.stream.Collectors.joining;
 
 /**
  * Outputs the AST as formatted Java source code.
@@ -885,7 +887,7 @@ public class DefaultPrettyPrinterVisitor implements VoidVisitor<Void> {
         printOrphanCommentsBeforeThisChildNode(n);
         printComment(n.getComment(), arg);
         printer.print(Integer.toString(n.getValue()));
-        switch (n.getTimeUnit()) {
+        switch(n.getTimeUnit()) {
             case MILLISECONDS:
                 printer.print("ms");
                 break;
@@ -911,6 +913,46 @@ public class DefaultPrettyPrinterVisitor implements VoidVisitor<Void> {
         printOrphanCommentsBeforeThisChildNode(n);
         printComment(n.getComment(), arg);
         printer.print("*");
+    }
+
+    @Override
+    public void visit(AbstractContextStatement<?, ?> n, Void arg) {
+        // no-op, handled in subclasses
+    }
+
+    @Override
+    public void visit(final ModifyStatement n, final Void arg) {
+        printOrphanCommentsBeforeThisChildNode(n);
+        printComment(n.getComment(), arg);
+        printer.print("modify (");
+        visitContextStatement(n, arg);
+    }
+
+    @Override
+    public void visit(final WithStatement n, final Void arg) {
+        printOrphanCommentsBeforeThisChildNode(n);
+        printComment(n.getComment(), arg);
+        printer.print("with (");
+        visitContextStatement(n, arg);
+    }
+
+    private void visitContextStatement(AbstractContextStatement<?, ?> contextExpression, Void arg) {
+        if (contextExpression.getTarget() != null) {
+            contextExpression.getTarget().accept(this, arg);
+        }
+        printer.print(") { ");
+        boolean first = true;
+        for (Statement stmt : contextExpression.getExpressions()) {
+            if (!first) {
+                printer.print("; ");
+            }
+            first = false;
+            stmt.accept(this, arg);
+        }
+        if (!contextExpression.getExpressions().isEmpty()) {
+            printer.print(";");
+        }
+        printer.print(" }");
     }
 
     @Override

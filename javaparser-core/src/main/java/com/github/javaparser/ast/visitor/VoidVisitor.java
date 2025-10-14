@@ -47,6 +47,9 @@ import org.mvel3.parser.ast.expr.NullSafeMethodCallExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralChunkExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralInfiniteChunkExpr;
+import org.mvel3.parser.ast.expr.AbstractContextStatement;
+import org.mvel3.parser.ast.expr.ModifyStatement;
+import org.mvel3.parser.ast.expr.WithStatement;
 
 /**
  * A visitor that does not return anything.
@@ -290,4 +293,10 @@ public interface VoidVisitor<A> {
     void visit(TemporalLiteralExpr n, A arg);
 
     void visit(TemporalLiteralInfiniteChunkExpr n, A arg);
+
+    void visit(AbstractContextStatement<?, ?> n, A arg);
+
+    void visit(ModifyStatement n, A arg);
+
+    void visit(WithStatement n, A arg);
 }

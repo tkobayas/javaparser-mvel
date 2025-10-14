@@ -47,6 +47,9 @@ import org.mvel3.parser.ast.expr.NullSafeMethodCallExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralChunkExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralInfiniteChunkExpr;
+import org.mvel3.parser.ast.expr.AbstractContextStatement;
+import org.mvel3.parser.ast.expr.ModifyStatement;
+import org.mvel3.parser.ast.expr.WithStatement;
 
 public class NoCommentHashCodeVisitor implements GenericVisitor<Integer, Void> {
 
@@ -561,5 +564,20 @@ public class NoCommentHashCodeVisitor implements GenericVisitor<Integer, Void> {
     @Override
     public Integer visit(final TemporalLiteralInfiniteChunkExpr n, final Void arg) {
         return (n.getTimeUnit().hashCode()) * 31 + (n.getValue().hashCode());
+    }
+
+    @Override
+    public Integer visit(final AbstractContextStatement<?, ?> n, final Void arg) {
+        return (n.getExpressions().accept(this, arg)) * 31 + (n.getTarget().accept(this, arg));
+    }
+
+    @Override
+    public Integer visit(final ModifyStatement n, final Void arg) {
+        return (n.getExpressions().accept(this, arg)) * 31 + (n.getTarget().accept(this, arg));
+    }
+
+    @Override
+    public Integer visit(final WithStatement n, final Void arg) {
+        return (n.getExpressions().accept(this, arg)) * 31 + (n.getTarget().accept(this, arg));
     }
 }

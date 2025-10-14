@@ -30,6 +30,9 @@ import com.github.javaparser.metamodel.StatementMetaModel;
 import java.util.Optional;
 import java.util.function.Consumer;
 import static com.github.javaparser.utils.CodeGenerationUtils.f;
+import org.mvel3.parser.ast.expr.AbstractContextStatement;
+import org.mvel3.parser.ast.expr.ModifyStatement;
+import org.mvel3.parser.ast.expr.WithStatement;
 
 /**
  * A base class for all statements.
@@ -480,5 +483,50 @@ public abstract class Statement extends Node {
 
     @Generated("com.github.javaparser.generator.core.node.TypeCastingGenerator")
     public void ifYieldStmt(Consumer<YieldStmt> action) {
+    }
+
+    public boolean isAbstractContextStatement() {
+        return false;
+    }
+
+    public AbstractContextStatement asAbstractContextStatement() {
+        throw new IllegalStateException(f("%s is not AbstractContextStatement, it is %s", this, this.getClass().getSimpleName()));
+    }
+
+    public Optional<AbstractContextStatement> toAbstractContextStatement() {
+        return Optional.empty();
+    }
+
+    public void ifAbstractContextStatement(Consumer<AbstractContextStatement> action) {
+    }
+
+    public boolean isModifyStatement() {
+        return false;
+    }
+
+    public ModifyStatement asModifyStatement() {
+        throw new IllegalStateException(f("%s is not ModifyStatement, it is %s", this, this.getClass().getSimpleName()));
+    }
+
+    public Optional<ModifyStatement> toModifyStatement() {
+        return Optional.empty();
+    }
+
+    public void ifModifyStatement(Consumer<ModifyStatement> action) {
+    }
+
+    public boolean isWithStatement() {
+        return false;
+    }
+
+    public WithStatement asWithStatement() {
+        throw new IllegalStateException(f("%s is not WithStatement, it is %s", this, this.getClass().getSimpleName()));
+    }
+
+    public Optional<WithStatement> toWithStatement() {
+        return Optional.empty();
+    }
+
+    public void ifWithStatement(Consumer<WithStatement> action) {
     }
 }

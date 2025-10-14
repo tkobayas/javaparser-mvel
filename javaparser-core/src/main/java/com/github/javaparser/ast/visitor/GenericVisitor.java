@@ -47,6 +47,9 @@ import org.mvel3.parser.ast.expr.NullSafeMethodCallExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralChunkExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralInfiniteChunkExpr;
+import org.mvel3.parser.ast.expr.AbstractContextStatement;
+import org.mvel3.parser.ast.expr.ModifyStatement;
+import org.mvel3.parser.ast.expr.WithStatement;
 
 /**
  * A visitor that has a return value.
@@ -295,4 +298,10 @@ public interface GenericVisitor<R, A> {
     R visit(TemporalLiteralExpr n, A arg);
 
     R visit(TemporalLiteralInfiniteChunkExpr n, A arg);
+
+    R visit(AbstractContextStatement<?, ?> n, A arg);
+
+    R visit(ModifyStatement n, A arg);
+
+    R visit(WithStatement n, A arg);
 }

@@ -47,6 +47,9 @@ import org.mvel3.parser.ast.expr.NullSafeMethodCallExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralChunkExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralInfiniteChunkExpr;
+import org.mvel3.parser.ast.expr.AbstractContextStatement;
+import org.mvel3.parser.ast.expr.ModifyStatement;
+import org.mvel3.parser.ast.expr.WithStatement;
 
 /**
  * A visitor that calculates a deep hash code for a node by using the hash codes of all its properties,
@@ -569,5 +572,20 @@ public class HashCodeVisitor implements GenericVisitor<Integer, Void> {
     @Override
     public Integer visit(final TemporalLiteralInfiniteChunkExpr n, final Void arg) {
         return (n.getTimeUnit().hashCode()) * 31 + (n.getValue().hashCode()) * 31 + (n.getComment().isPresent() ? n.getComment().get().accept(this, arg) : 0);
+    }
+
+    @Override
+    public Integer visit(final AbstractContextStatement<?, ?> n, final Void arg) {
+        return (n.getExpressions().accept(this, arg)) * 31 + (n.getTarget().accept(this, arg)) * 31 + (n.getComment().isPresent() ? n.getComment().get().accept(this, arg) : 0);
+    }
+
+    @Override
+    public Integer visit(final ModifyStatement n, final Void arg) {
+        return (n.getExpressions().accept(this, arg)) * 31 + (n.getTarget().accept(this, arg)) * 31 + (n.getComment().isPresent() ? n.getComment().get().accept(this, arg) : 0);
+    }
+
+    @Override
+    public Integer visit(final WithStatement n, final Void arg) {
+        return (n.getExpressions().accept(this, arg)) * 31 + (n.getTarget().accept(this, arg)) * 31 + (n.getComment().isPresent() ? n.getComment().get().accept(this, arg) : 0);
     }
 }

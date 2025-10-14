@@ -190,6 +190,7 @@ public class MetaModelGenerator extends AbstractGenerator {
         add(com.github.javaparser.ast.modules.ModuleRequiresDirective.class);
         add(com.github.javaparser.ast.modules.ModuleUsesDirective.class);
 
+        // MVEL specific nodes
         add(org.mvel3.parser.ast.expr.InlineCastExpr.class);
         add(org.mvel3.parser.ast.expr.FullyQualifiedInlineCastExpr.class);
         add(org.mvel3.parser.ast.expr.BigDecimalLiteralExpr.class);
@@ -210,6 +211,10 @@ public class MetaModelGenerator extends AbstractGenerator {
         add(org.mvel3.parser.ast.expr.TemporalLiteralChunkExpr.class);
         add(org.mvel3.parser.ast.expr.TemporalLiteralExpr.class);
         add(org.mvel3.parser.ast.expr.TemporalLiteralInfiniteChunkExpr.class);
+
+        add(org.mvel3.parser.ast.expr.AbstractContextStatement.class);
+        add(org.mvel3.parser.ast.expr.ModifyStatement.class);
+        add(org.mvel3.parser.ast.expr.WithStatement.class);
 
         //add(org.mvel3.parser.ast.expr.RuleDeclaration.class); // TODO: Higher level node should be generated later
     }};

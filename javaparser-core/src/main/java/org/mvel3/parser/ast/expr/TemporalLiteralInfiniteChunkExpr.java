@@ -100,6 +100,7 @@ public class TemporalLiteralInfiniteChunkExpr extends TemporalChunkExpr {
         return Optional.of(this);
     }
 
+    @Override
     @Generated("com.github.javaparser.generator.core.node.TypeCastingGenerator")
     public void ifTemporalLiteralInfiniteChunkExpr(Consumer<TemporalLiteralInfiniteChunkExpr> action) {
         action.accept(this);

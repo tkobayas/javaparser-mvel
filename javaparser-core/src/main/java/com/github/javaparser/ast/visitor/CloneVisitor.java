@@ -50,6 +50,9 @@ import org.mvel3.parser.ast.expr.TemporalChunkExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralChunkExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralInfiniteChunkExpr;
+import org.mvel3.parser.ast.expr.AbstractContextStatement;
+import org.mvel3.parser.ast.expr.ModifyStatement;
+import org.mvel3.parser.ast.expr.WithStatement;
 
 /**
  * A visitor that clones (copies) a node and all its children.
@@ -1520,6 +1523,42 @@ public class CloneVisitor implements GenericVisitor<Visitable, Object> {
     public Visitable visit(final TemporalLiteralInfiniteChunkExpr n, final Object arg) {
         Comment comment = cloneNode(n.getComment(), arg);
         TemporalLiteralInfiniteChunkExpr r = new TemporalLiteralInfiniteChunkExpr(n.getTokenRange().orElse(null), n.getValue(), n.getTimeUnit());
+        r.setComment(comment);
+        n.getOrphanComments().stream().map(Comment::clone).forEach(r::addOrphanComment);
+        copyData(n, r);
+        return r;
+    }
+
+    @Override
+    public Visitable visit(final AbstractContextStatement<?, ?> n, final Object arg) {
+        NodeList<Statement> expressions = cloneList(n.getExpressions(), arg);
+        Expression target = cloneNode(n.getTarget(), arg);
+        Comment comment = cloneNode(n.getComment(), arg);
+        AbstractContextStatement<?, ?> r = new AbstractContextStatement<>(n.getTokenRange().orElse(null), target, expressions);
+        r.setComment(comment);
+        n.getOrphanComments().stream().map(Comment::clone).forEach(r::addOrphanComment);
+        copyData(n, r);
+        return r;
+    }
+
+    @Override
+    public Visitable visit(final ModifyStatement n, final Object arg) {
+        NodeList<Statement> expressions = cloneList(n.getExpressions(), arg);
+        Expression target = cloneNode(n.getTarget(), arg);
+        Comment comment = cloneNode(n.getComment(), arg);
+        ModifyStatement r = new ModifyStatement(n.getTokenRange().orElse(null), target, expressions);
+        r.setComment(comment);
+        n.getOrphanComments().stream().map(Comment::clone).forEach(r::addOrphanComment);
+        copyData(n, r);
+        return r;
+    }
+
+    @Override
+    public Visitable visit(final WithStatement n, final Object arg) {
+        NodeList<Statement> expressions = cloneList(n.getExpressions(), arg);
+        Expression target = cloneNode(n.getTarget(), arg);
+        Comment comment = cloneNode(n.getComment(), arg);
+        WithStatement r = new WithStatement(n.getTokenRange().orElse(null), target, expressions);
         r.setComment(comment);
         n.getOrphanComments().stream().map(Comment::clone).forEach(r::addOrphanComment);
         copyData(n, r);

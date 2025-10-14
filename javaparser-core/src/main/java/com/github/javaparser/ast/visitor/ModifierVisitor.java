@@ -55,6 +55,9 @@ import org.mvel3.parser.ast.expr.TemporalChunkExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralChunkExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralInfiniteChunkExpr;
+import org.mvel3.parser.ast.expr.AbstractContextStatement;
+import org.mvel3.parser.ast.expr.ModifyStatement;
+import org.mvel3.parser.ast.expr.WithStatement;
 
 /**
  * This visitor can be used to save time when some specific nodes needs
@@ -1565,6 +1568,45 @@ public class ModifierVisitor<A> implements GenericVisitor<Visitable, A> {
     @Override
     public Visitable visit(final TemporalLiteralInfiniteChunkExpr n, final A arg) {
         Comment comment = n.getComment().map(s -> (Comment) s.accept(this, arg)).orElse(null);
+        n.setComment(comment);
+        return n;
+    }
+
+    @Override
+    public Visitable visit(final AbstractContextStatement<?, ?> n, final A arg) {
+        NodeList<Statement> expressions = modifyList(n.getExpressions(), arg);
+        Expression target = (Expression) n.getTarget().accept(this, arg);
+        Comment comment = n.getComment().map(s -> (Comment) s.accept(this, arg)).orElse(null);
+        if (target == null)
+            return null;
+        n.setExpressions(expressions);
+        n.setTarget(target);
+        n.setComment(comment);
+        return n;
+    }
+
+    @Override
+    public Visitable visit(final ModifyStatement n, final A arg) {
+        NodeList<Statement> expressions = modifyList(n.getExpressions(), arg);
+        Expression target = (Expression) n.getTarget().accept(this, arg);
+        Comment comment = n.getComment().map(s -> (Comment) s.accept(this, arg)).orElse(null);
+        if (target == null)
+            return null;
+        n.setExpressions(expressions);
+        n.setTarget(target);
+        n.setComment(comment);
+        return n;
+    }
+
+    @Override
+    public Visitable visit(final WithStatement n, final A arg) {
+        NodeList<Statement> expressions = modifyList(n.getExpressions(), arg);
+        Expression target = (Expression) n.getTarget().accept(this, arg);
+        Comment comment = n.getComment().map(s -> (Comment) s.accept(this, arg)).orElse(null);
+        if (target == null)
+            return null;
+        n.setExpressions(expressions);
+        n.setTarget(target);
         n.setComment(comment);
         return n;
     }

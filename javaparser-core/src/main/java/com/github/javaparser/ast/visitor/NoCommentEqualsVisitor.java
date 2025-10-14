@@ -48,6 +48,9 @@ import org.mvel3.parser.ast.expr.NullSafeMethodCallExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralChunkExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralInfiniteChunkExpr;
+import org.mvel3.parser.ast.expr.AbstractContextStatement;
+import org.mvel3.parser.ast.expr.ModifyStatement;
+import org.mvel3.parser.ast.expr.WithStatement;
 
 public class NoCommentEqualsVisitor implements GenericVisitor<Boolean, Visitable> {
 
@@ -1369,6 +1372,36 @@ public class NoCommentEqualsVisitor implements GenericVisitor<Boolean, Visitable
         if (!objEquals(n.getTimeUnit(), n2.getTimeUnit()))
             return false;
         if (!objEquals(n.getValue(), n2.getValue()))
+            return false;
+        return true;
+    }
+
+    @Override
+    public Boolean visit(final AbstractContextStatement<?, ?> n, final Visitable arg) {
+        final AbstractContextStatement n2 = (AbstractContextStatement) arg;
+        if (!nodesEquals(n.getExpressions(), n2.getExpressions()))
+            return false;
+        if (!nodeEquals(n.getTarget(), n2.getTarget()))
+            return false;
+        return true;
+    }
+
+    @Override
+    public Boolean visit(final ModifyStatement n, final Visitable arg) {
+        final ModifyStatement n2 = (ModifyStatement) arg;
+        if (!nodesEquals(n.getExpressions(), n2.getExpressions()))
+            return false;
+        if (!nodeEquals(n.getTarget(), n2.getTarget()))
+            return false;
+        return true;
+    }
+
+    @Override
+    public Boolean visit(final WithStatement n, final Visitable arg) {
+        final WithStatement n2 = (WithStatement) arg;
+        if (!nodesEquals(n.getExpressions(), n2.getExpressions()))
+            return false;
+        if (!nodeEquals(n.getTarget(), n2.getTarget()))
             return false;
         return true;
     }

@@ -33,30 +33,35 @@ import com.github.javaparser.metamodel.JavaParserMetaModel;
 import com.github.javaparser.printer.concretesyntaxmodel.CsmConditional;
 import com.github.javaparser.printer.concretesyntaxmodel.CsmElement;
 import com.github.javaparser.printer.concretesyntaxmodel.CsmMix;
+import java.util.*;
+import java.util.stream.Collectors;
+import org.mvel3.parser.ast.expr.AbstractContextStatement;
 import org.mvel3.parser.ast.expr.BigDecimalLiteralExpr;
 import org.mvel3.parser.ast.expr.BigIntegerLiteralExpr;
 import org.mvel3.parser.ast.expr.DrlNameExpr;
 import org.mvel3.parser.ast.expr.DrlxExpression;
+import org.mvel3.parser.ast.expr.FullyQualifiedInlineCastExpr;
 import org.mvel3.parser.ast.expr.HalfBinaryExpr;
 import org.mvel3.parser.ast.expr.HalfPointFreeExpr;
-import org.mvel3.parser.ast.expr.FullyQualifiedInlineCastExpr;
 import org.mvel3.parser.ast.expr.InlineCastExpr;
 import org.mvel3.parser.ast.expr.ListCreationLiteralExpression;
 import org.mvel3.parser.ast.expr.ListCreationLiteralExpressionElement;
 import org.mvel3.parser.ast.expr.MapCreationLiteralExpression;
 import org.mvel3.parser.ast.expr.MapCreationLiteralExpressionKeyValuePair;
+import org.mvel3.parser.ast.expr.ModifyStatement;
 import org.mvel3.parser.ast.expr.NullSafeFieldAccessExpr;
 import org.mvel3.parser.ast.expr.NullSafeMethodCallExpr;
+import org.mvel3.parser.ast.expr.PointFreeExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralChunkExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralInfiniteChunkExpr;
-import org.mvel3.parser.ast.expr.PointFreeExpr;
-import java.util.*;
-import java.util.stream.Collectors;
+import org.mvel3.parser.ast.expr.WithStatement;
 import static com.github.javaparser.GeneratedJavaParserConstants.*;
 import static com.github.javaparser.ast.observer.ObservableProperty.*;
 import static com.github.javaparser.printer.concretesyntaxmodel.CsmConditional.Condition.*;
 import static com.github.javaparser.printer.concretesyntaxmodel.CsmElement.*;
+
+
 
 /**
  * The Concrete Syntax Model for a single node type. It knows the syntax used to represent a certain element in Java
@@ -176,6 +181,9 @@ public class ConcreteSyntaxModel {
         concreteSyntaxModelByClass.put(TemporalLiteralExpr.class, sequence(comment(), list(ObservableProperty.CHUNKS)));
         concreteSyntaxModelByClass.put(TemporalLiteralChunkExpr.class, sequence(comment(), attribute(ObservableProperty.VALUE), attribute(ObservableProperty.TIME_UNIT)));
         concreteSyntaxModelByClass.put(TemporalLiteralInfiniteChunkExpr.class, sequence(comment(), string(GeneratedJavaParserConstants.STAR)));
+        concreteSyntaxModelByClass.put(AbstractContextStatement.class, sequence(comment(), child(ObservableProperty.EXPRESSION), space(), string(GeneratedJavaParserConstants.LBRACE), space(), list(ObservableProperty.STATEMENTS, sequence(string(GeneratedJavaParserConstants.SEMICOLON), space())), conditional(ObservableProperty.STATEMENTS, IS_NOT_EMPTY, string(GeneratedJavaParserConstants.SEMICOLON)), space(), string(GeneratedJavaParserConstants.RBRACE)));
+        concreteSyntaxModelByClass.put(ModifyStatement.class, sequence(comment(), string(GeneratedJavaParserConstants.IDENTIFIER, "modify"), space(), string(GeneratedJavaParserConstants.LPAREN), child(ObservableProperty.EXPRESSION), string(GeneratedJavaParserConstants.RPAREN), space(), string(GeneratedJavaParserConstants.LBRACE), space(), list(ObservableProperty.STATEMENTS, sequence(string(GeneratedJavaParserConstants.SEMICOLON), space())), conditional(ObservableProperty.STATEMENTS, IS_NOT_EMPTY, string(GeneratedJavaParserConstants.SEMICOLON)), space(), string(GeneratedJavaParserConstants.RBRACE)));
+        concreteSyntaxModelByClass.put(WithStatement.class, sequence(comment(), string(GeneratedJavaParserConstants.IDENTIFIER, "with"), space(), string(GeneratedJavaParserConstants.LPAREN), child(ObservableProperty.EXPRESSION), string(GeneratedJavaParserConstants.RPAREN), space(), string(GeneratedJavaParserConstants.LBRACE), space(), list(ObservableProperty.STATEMENTS, sequence(string(GeneratedJavaParserConstants.SEMICOLON), space())), conditional(ObservableProperty.STATEMENTS, IS_NOT_EMPTY, string(GeneratedJavaParserConstants.SEMICOLON)), space(), string(GeneratedJavaParserConstants.RBRACE)));
         concreteSyntaxModelByClass.put(NullSafeFieldAccessExpr.class, sequence(comment(), child(ObservableProperty.SCOPE), string(GeneratedJavaParserConstants.IDENTIFIER, "!"), string(GeneratedJavaParserConstants.DOT), child(ObservableProperty.NAME)));
         concreteSyntaxModelByClass.put(NullSafeMethodCallExpr.class, sequence(comment(), conditional(ObservableProperty.SCOPE, IS_PRESENT, sequence(child(ObservableProperty.SCOPE), string(GeneratedJavaParserConstants.IDENTIFIER, "!"), string(GeneratedJavaParserConstants.DOT))), list(ObservableProperty.TYPE_ARGUMENTS, sequence(string(GeneratedJavaParserConstants.COMMA), space()), string(GeneratedJavaParserConstants.LT), string(GeneratedJavaParserConstants.GT)), child(ObservableProperty.NAME), string(GeneratedJavaParserConstants.LPAREN), list(ObservableProperty.ARGUMENTS, sequence(string(GeneratedJavaParserConstants.COMMA), space())), string(GeneratedJavaParserConstants.RPAREN)));
         // /

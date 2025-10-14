@@ -334,6 +334,12 @@ public final class JavaParserMetaModel {
         temporalLiteralExprMetaModel.getConstructorParameters().add(temporalLiteralExprMetaModel.chunksPropertyMetaModel);
         temporalLiteralInfiniteChunkExprMetaModel.getConstructorParameters().add(temporalLiteralInfiniteChunkExprMetaModel.valuePropertyMetaModel);
         temporalLiteralInfiniteChunkExprMetaModel.getConstructorParameters().add(temporalLiteralInfiniteChunkExprMetaModel.timeUnitPropertyMetaModel);
+        abstractContextStatementMetaModel.getConstructorParameters().add(abstractContextStatementMetaModel.targetPropertyMetaModel);
+        abstractContextStatementMetaModel.getConstructorParameters().add(abstractContextStatementMetaModel.expressionsPropertyMetaModel);
+        modifyStatementMetaModel.getConstructorParameters().add(abstractContextStatementMetaModel.targetPropertyMetaModel);
+        modifyStatementMetaModel.getConstructorParameters().add(abstractContextStatementMetaModel.expressionsPropertyMetaModel);
+        withStatementMetaModel.getConstructorParameters().add(abstractContextStatementMetaModel.targetPropertyMetaModel);
+        withStatementMetaModel.getConstructorParameters().add(abstractContextStatementMetaModel.expressionsPropertyMetaModel);
     }
 
     public static List<BaseNodeMetaModel> getNodeMetaModels() {
@@ -342,6 +348,7 @@ public final class JavaParserMetaModel {
 
     @Generated("com.github.javaparser.generator.metamodel.MetaModelGenerator")
     private static void initializeNodeMetaModels() {
+        nodeMetaModels.add(abstractContextStatementMetaModel);
         nodeMetaModels.add(annotationDeclarationMetaModel);
         nodeMetaModels.add(annotationExprMetaModel);
         nodeMetaModels.add(annotationMemberDeclarationMetaModel);
@@ -417,6 +424,7 @@ public final class JavaParserMetaModel {
         nodeMetaModels.add(methodDeclarationMetaModel);
         nodeMetaModels.add(methodReferenceExprMetaModel);
         nodeMetaModels.add(modifierMetaModel);
+        nodeMetaModels.add(modifyStatementMetaModel);
         nodeMetaModels.add(moduleDeclarationMetaModel);
         nodeMetaModels.add(moduleDirectiveMetaModel);
         nodeMetaModels.add(moduleExportsDirectiveMetaModel);
@@ -472,6 +480,7 @@ public final class JavaParserMetaModel {
         nodeMetaModels.add(voidTypeMetaModel);
         nodeMetaModels.add(whileStmtMetaModel);
         nodeMetaModels.add(wildcardTypeMetaModel);
+        nodeMetaModels.add(withStatementMetaModel);
         nodeMetaModels.add(yieldStmtMetaModel);
     }
 
@@ -993,6 +1002,10 @@ public final class JavaParserMetaModel {
         temporalLiteralInfiniteChunkExprMetaModel.getDeclaredPropertyMetaModels().add(temporalLiteralInfiniteChunkExprMetaModel.timeUnitPropertyMetaModel);
         temporalLiteralInfiniteChunkExprMetaModel.valuePropertyMetaModel = new PropertyMetaModel(temporalLiteralInfiniteChunkExprMetaModel, "value", java.lang.String.class, Optional.empty(), false, false, false, false);
         temporalLiteralInfiniteChunkExprMetaModel.getDeclaredPropertyMetaModels().add(temporalLiteralInfiniteChunkExprMetaModel.valuePropertyMetaModel);
+        abstractContextStatementMetaModel.expressionsPropertyMetaModel = new PropertyMetaModel(abstractContextStatementMetaModel, "expressions", com.github.javaparser.ast.stmt.Statement.class, Optional.of(statementMetaModel), false, false, true, false);
+        abstractContextStatementMetaModel.getDeclaredPropertyMetaModels().add(abstractContextStatementMetaModel.expressionsPropertyMetaModel);
+        abstractContextStatementMetaModel.targetPropertyMetaModel = new PropertyMetaModel(abstractContextStatementMetaModel, "target", com.github.javaparser.ast.expr.Expression.class, Optional.of(expressionMetaModel), false, false, false, false);
+        abstractContextStatementMetaModel.getDeclaredPropertyMetaModels().add(abstractContextStatementMetaModel.targetPropertyMetaModel);
     }
 
     public static Optional<BaseNodeMetaModel> getNodeMetaModel(Class<?> c) {
@@ -1396,6 +1409,15 @@ public final class JavaParserMetaModel {
 
     @Generated("com.github.javaparser.generator.metamodel.NodeMetaModelGenerator")
     public static final TemporalLiteralInfiniteChunkExprMetaModel temporalLiteralInfiniteChunkExprMetaModel = new TemporalLiteralInfiniteChunkExprMetaModel(Optional.of(temporalChunkExprMetaModel));
+
+    @Generated("com.github.javaparser.generator.metamodel.NodeMetaModelGenerator")
+    public static final AbstractContextStatementMetaModel abstractContextStatementMetaModel = new AbstractContextStatementMetaModel(Optional.of(statementMetaModel));
+
+    @Generated("com.github.javaparser.generator.metamodel.NodeMetaModelGenerator")
+    public static final ModifyStatementMetaModel modifyStatementMetaModel = new ModifyStatementMetaModel(Optional.of(abstractContextStatementMetaModel));
+
+    @Generated("com.github.javaparser.generator.metamodel.NodeMetaModelGenerator")
+    public static final WithStatementMetaModel withStatementMetaModel = new WithStatementMetaModel(Optional.of(abstractContextStatementMetaModel));
 
     static {
         initializeNodeMetaModels();

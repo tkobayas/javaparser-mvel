@@ -47,6 +47,9 @@ import org.mvel3.parser.ast.expr.NullSafeMethodCallExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralChunkExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralInfiniteChunkExpr;
+import org.mvel3.parser.ast.expr.AbstractContextStatement;
+import org.mvel3.parser.ast.expr.ModifyStatement;
+import org.mvel3.parser.ast.expr.WithStatement;
 
 /**
  * A visitor that has a return value (R), and has a default implementation for all its visit
@@ -2587,6 +2590,69 @@ public abstract class GenericVisitorAdapter<R, A> implements GenericVisitor<R, A
     @Override
     public R visit(final TemporalLiteralInfiniteChunkExpr n, final A arg) {
         R result;
+        if (n.getComment().isPresent()) {
+            result = n.getComment().get().accept(this, arg);
+            if (result != null)
+                return result;
+        }
+        return null;
+    }
+
+    @Override
+    public R visit(final AbstractContextStatement<?, ?> n, final A arg) {
+        R result;
+        {
+            result = n.getExpressions().accept(this, arg);
+            if (result != null)
+                return result;
+        }
+        {
+            result = n.getTarget().accept(this, arg);
+            if (result != null)
+                return result;
+        }
+        if (n.getComment().isPresent()) {
+            result = n.getComment().get().accept(this, arg);
+            if (result != null)
+                return result;
+        }
+        return null;
+    }
+
+    @Override
+    public R visit(final ModifyStatement n, final A arg) {
+        R result;
+        {
+            result = n.getExpressions().accept(this, arg);
+            if (result != null)
+                return result;
+        }
+        {
+            result = n.getTarget().accept(this, arg);
+            if (result != null)
+                return result;
+        }
+        if (n.getComment().isPresent()) {
+            result = n.getComment().get().accept(this, arg);
+            if (result != null)
+                return result;
+        }
+        return null;
+    }
+
+    @Override
+    public R visit(final WithStatement n, final A arg) {
+        R result;
+        {
+            result = n.getExpressions().accept(this, arg);
+            if (result != null)
+                return result;
+        }
+        {
+            result = n.getTarget().accept(this, arg);
+            if (result != null)
+                return result;
+        }
         if (n.getComment().isPresent()) {
             result = n.getComment().get().accept(this, arg);
             if (result != null)

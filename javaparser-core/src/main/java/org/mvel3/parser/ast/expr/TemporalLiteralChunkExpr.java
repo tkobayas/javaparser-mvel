@@ -97,6 +97,7 @@ public class TemporalLiteralChunkExpr extends TemporalChunkExpr {
         return Optional.of(this);
     }
 
+    @Override
     @Generated("com.github.javaparser.generator.core.node.TypeCastingGenerator")
     public void ifTemporalLiteralChunkExpr(Consumer<TemporalLiteralChunkExpr> action) {
         action.accept(this);

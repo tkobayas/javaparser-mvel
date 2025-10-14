@@ -1,6 +1,7 @@
 package org.mvel3.parser.ast.expr;
 
 import com.github.javaparser.TokenRange;
+import com.github.javaparser.ast.AllFieldsConstructor;
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.stmt.Statement;
@@ -8,22 +9,68 @@ import com.github.javaparser.ast.visitor.GenericVisitor;
 import com.github.javaparser.ast.visitor.VoidVisitor;
 import org.mvel3.parser.ast.visitor.DrlGenericVisitor;
 import org.mvel3.parser.ast.visitor.DrlVoidVisitor;
+import java.util.Optional;
+import java.util.function.Consumer;
+import com.github.javaparser.ast.Node;
+import com.github.javaparser.ast.visitor.CloneVisitor;
+import com.github.javaparser.metamodel.ModifyStatementMetaModel;
+import com.github.javaparser.metamodel.JavaParserMetaModel;
+import com.github.javaparser.ast.Generated;
 
 public class ModifyStatement extends AbstractContextStatement<ModifyStatement, Expression> {
 
-    public ModifyStatement(TokenRange tokenRange, Expression withObject, NodeList<Statement> expressions) {
-        super(tokenRange, withObject, expressions);
+    @AllFieldsConstructor
+    public ModifyStatement(Expression target, NodeList<Statement> expressions) {
+        this(null, target, expressions);
+    }
+
+    /**
+     * This constructor is used by the parser and is considered private.
+     */
+    @Generated("com.github.javaparser.generator.core.node.MainConstructorGenerator")
+    public ModifyStatement(TokenRange tokenRange, Expression target, NodeList<Statement> expressions) {
+        super(tokenRange, target, expressions);
+        customInitialization();
     }
 
     @Override
-    public <R, A> R accept(GenericVisitor<R, A> v, A arg) {
-        return ((DrlGenericVisitor<R, A>) v).visit(this, arg);
+    @Generated("com.github.javaparser.generator.core.node.AcceptGenerator")
+    public <R, A> R accept(final GenericVisitor<R, A> v, final A arg) {
+        return v.visit(this, arg);
     }
 
     @Override
-    public <A> void accept(VoidVisitor<A> v, A arg) {
-        if (v instanceof DrlVoidVisitor) {
-            ((DrlVoidVisitor<A>) v).visit(this, arg);
-        }
+    @Generated("com.github.javaparser.generator.core.node.AcceptGenerator")
+    public <A> void accept(final VoidVisitor<A> v, final A arg) {
+        v.visit(this, arg);
+    }
+
+    @Override
+    public boolean isModifyStatement() {
+        return true;
+    }
+
+    @Override
+    public ModifyStatement asModifyStatement() {
+        return this;
+    }
+
+    @Override
+    public Optional<ModifyStatement> toModifyStatement() {
+        return Optional.of(this);
+    }
+
+    public void ifModifyStatement(Consumer<ModifyStatement> action) {
+        action.accept(this);
+    }
+
+    @Override
+    public ModifyStatement clone() {
+        return (ModifyStatement) accept(new CloneVisitor(), null);
+    }
+
+    @Override
+    public ModifyStatementMetaModel getMetaModel() {
+        return JavaParserMetaModel.modifyStatementMetaModel;
     }
 }

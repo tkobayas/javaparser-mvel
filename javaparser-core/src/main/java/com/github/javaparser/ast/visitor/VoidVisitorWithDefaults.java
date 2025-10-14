@@ -47,6 +47,9 @@ import org.mvel3.parser.ast.expr.NullSafeMethodCallExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralChunkExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralInfiniteChunkExpr;
+import org.mvel3.parser.ast.expr.AbstractContextStatement;
+import org.mvel3.parser.ast.expr.ModifyStatement;
+import org.mvel3.parser.ast.expr.WithStatement;
 
 /**
  * A visitor that returns nothing, and has default methods that are used when a specific visit method is not
@@ -651,6 +654,21 @@ public abstract class VoidVisitorWithDefaults<A> implements VoidVisitor<A> {
 
     @Override
     public void visit(final TemporalLiteralInfiniteChunkExpr n, final A arg) {
+        defaultAction(n, arg);
+    }
+
+    @Override
+    public void visit(final AbstractContextStatement<?, ?> n, final A arg) {
+        defaultAction(n, arg);
+    }
+
+    @Override
+    public void visit(final ModifyStatement n, final A arg) {
+        defaultAction(n, arg);
+    }
+
+    @Override
+    public void visit(final WithStatement n, final A arg) {
         defaultAction(n, arg);
     }
 }
