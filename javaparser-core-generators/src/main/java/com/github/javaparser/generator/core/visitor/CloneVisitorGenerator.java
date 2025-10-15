@@ -70,7 +70,11 @@ public class CloneVisitorGenerator extends VisitorGenerator {
             }
         }
 
-        SeparatedItemStringBuilder builder = new SeparatedItemStringBuilder(f("%s r = new %s(", node.getTypeNameGenerified(), node.getTypeNameGenerified()), ",", ");");
+        String ctorType = node.getType().getTypeParameters().length > 0
+                        ? f("%s<>", node.getTypeName())
+                        : node.getTypeNameGenerified();
+        SeparatedItemStringBuilder builder = new SeparatedItemStringBuilder(
+                        f("%s r = new %s(", node.getTypeNameGenerified(), ctorType), ",", ");");
         builder.append("n.getTokenRange().orElse(null)");
         for (PropertyMetaModel field : node.getConstructorParameters()) {
             if (field.getName().equals("comment")) {
