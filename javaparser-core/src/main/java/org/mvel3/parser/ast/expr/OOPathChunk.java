@@ -17,9 +17,9 @@
  */
 package org.mvel3.parser.ast.expr;
 
-import java.util.List;
 import com.github.javaparser.TokenRange;
 import com.github.javaparser.ast.AllFieldsConstructor;
+import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.SimpleName;
 import com.github.javaparser.ast.visitor.GenericVisitor;
@@ -33,18 +33,18 @@ public class OOPathChunk extends Expression {
 
     private SimpleName inlineCast;
 
-    private List<DrlxExpression> condition;
+    private NodeList<DrlxExpression> condition;
 
     private boolean singleValue;
 
     private boolean passive;
 
     @AllFieldsConstructor
-    public OOPathChunk(SimpleName field, SimpleName inlineCast, List<DrlxExpression> condition) {
+    public OOPathChunk(SimpleName field, SimpleName inlineCast, NodeList<DrlxExpression> condition) {
         this(null, field, inlineCast, condition);
     }
 
-    public OOPathChunk(TokenRange range, SimpleName field, SimpleName inlineCast, List<DrlxExpression> condition) {
+    public OOPathChunk(TokenRange range, SimpleName field, SimpleName inlineCast, NodeList<DrlxExpression> condition) {
         super(range);
         this.field = field;
         this.inlineCast = inlineCast;
@@ -59,7 +59,7 @@ public class OOPathChunk extends Expression {
         return inlineCast;
     }
 
-    public List<DrlxExpression> getConditions() {
+    public NodeList<DrlxExpression> getConditions() {
         return condition;
     }
 
