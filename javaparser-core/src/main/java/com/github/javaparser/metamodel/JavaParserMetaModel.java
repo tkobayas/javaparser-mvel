@@ -1012,7 +1012,7 @@ public final class JavaParserMetaModel {
         abstractContextStatementMetaModel.getDeclaredPropertyMetaModels().add(abstractContextStatementMetaModel.expressionsPropertyMetaModel);
         abstractContextStatementMetaModel.targetPropertyMetaModel = new PropertyMetaModel(abstractContextStatementMetaModel, "target", com.github.javaparser.ast.expr.Expression.class, Optional.of(expressionMetaModel), false, false, false, false);
         abstractContextStatementMetaModel.getDeclaredPropertyMetaModels().add(abstractContextStatementMetaModel.targetPropertyMetaModel);
-        oOPathChunkMetaModel.conditionPropertyMetaModel = new PropertyMetaModel(oOPathChunkMetaModel, "condition", org.mvel3.parser.ast.expr.DrlxExpression.class, Optional.of(drlxExpressionMetaModel), false, false, false, false);
+        oOPathChunkMetaModel.conditionPropertyMetaModel = new PropertyMetaModel(oOPathChunkMetaModel, "condition", org.mvel3.parser.ast.expr.DrlxExpression.class, Optional.of(drlxExpressionMetaModel), false, false, true, false);
         oOPathChunkMetaModel.getDeclaredPropertyMetaModels().add(oOPathChunkMetaModel.conditionPropertyMetaModel);
         oOPathChunkMetaModel.fieldPropertyMetaModel = new PropertyMetaModel(oOPathChunkMetaModel, "field", com.github.javaparser.ast.expr.SimpleName.class, Optional.of(simpleNameMetaModel), false, false, false, false);
         oOPathChunkMetaModel.getDeclaredPropertyMetaModels().add(oOPathChunkMetaModel.fieldPropertyMetaModel);
