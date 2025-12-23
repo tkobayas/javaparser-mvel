@@ -53,7 +53,7 @@ public class TemporalLiteralChunkExpr extends TemporalChunkExpr {
 
     public TemporalLiteralChunkExpr(TokenRange tokenRange, String value, TimeUnit timeUnit) {
         super(tokenRange);
-        this.value = Integer.parseInt(value.substring(0, value.length() - (timeUnit == TimeUnit.MILLISECONDS ? 2 : 1)));
+        this.value = Integer.parseInt(value);
         this.timeUnit = timeUnit;
     }
 
