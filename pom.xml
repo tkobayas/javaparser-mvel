@@ -255,6 +255,8 @@
                     <artifactId>maven-release-plugin</artifactId>
                     <version>3.0.1</version>
                     <configuration>
+                        <!-- Tag format: 3.25.5-mvel3-1 (just the version) -->
+                        <tagNameFormat>@{project.version}</tagNameFormat>
                         <!-- When updating versions during release, synchronise versions of sub-modules with the parent-pom. -->
                         <autoVersionSubmodules>true</autoVersionSubmodules>
                         <!-- During release:prepare, update the readme (via the "run-release" profile) and add it to git. -->
