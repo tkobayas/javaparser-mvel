@@ -59,6 +59,7 @@ import org.mvel3.parser.ast.expr.RulePattern;
 import org.mvel3.parser.ast.expr.TemporalLiteralChunkExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralInfiniteChunkExpr;
+import org.mvel3.parser.ast.expr.CompactWithExpression;
 import org.mvel3.parser.ast.expr.WithStatement;
 
 public class DefaultVisitorAdapter implements GenericVisitor<ResolvedType, Boolean> {
@@ -339,6 +340,11 @@ public class DefaultVisitorAdapter implements GenericVisitor<ResolvedType, Boole
 
     @Override
     public ResolvedType visit(WithStatement node, Boolean aBoolean) {
+        throw new UnsupportedOperationException(node.getClass().getCanonicalName());
+    }
+
+    @Override
+    public ResolvedType visit(CompactWithExpression node, Boolean aBoolean) {
         throw new UnsupportedOperationException(node.getClass().getCanonicalName());
     }
 
