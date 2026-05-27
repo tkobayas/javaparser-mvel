@@ -58,6 +58,7 @@ import org.mvel3.parser.ast.expr.TemporalLiteralInfiniteChunkExpr;
 import org.mvel3.parser.ast.expr.AbstractContextStatement;
 import org.mvel3.parser.ast.expr.ModifyStatement;
 import org.mvel3.parser.ast.expr.WithStatement;
+import org.mvel3.parser.ast.expr.CompactWithExpression;
 import org.mvel3.parser.ast.expr.OOPathChunk;
 import org.mvel3.parser.ast.expr.OOPathExpr;
 import org.mvel3.parser.ast.expr.RuleBody;
@@ -1614,6 +1615,18 @@ public class ModifierVisitor<A> implements GenericVisitor<Visitable, A> {
         if (target == null)
             return null;
         n.setExpressions(expressions);
+        n.setTarget(target);
+        n.setComment(comment);
+        return n;
+    }
+
+    public Visitable visit(final CompactWithExpression n, final A arg) {
+        NodeList<AssignExpr> assignments = modifyList(n.getAssignments(), arg);
+        NameExpr target = (NameExpr) n.getTarget().accept(this, arg);
+        Comment comment = n.getComment().map(s -> (Comment) s.accept(this, arg)).orElse(null);
+        if (target == null)
+            return null;
+        n.setAssignments(assignments);
         n.setTarget(target);
         n.setComment(comment);
         return n;
