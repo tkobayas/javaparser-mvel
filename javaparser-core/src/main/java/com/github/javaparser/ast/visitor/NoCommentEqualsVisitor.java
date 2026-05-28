@@ -51,6 +51,7 @@ import org.mvel3.parser.ast.expr.TemporalLiteralInfiniteChunkExpr;
 import org.mvel3.parser.ast.expr.AbstractContextStatement;
 import org.mvel3.parser.ast.expr.ModifyStatement;
 import org.mvel3.parser.ast.expr.WithStatement;
+import org.mvel3.parser.ast.expr.CompactWithExpression;
 import org.mvel3.parser.ast.expr.OOPathChunk;
 import org.mvel3.parser.ast.expr.OOPathExpr;
 import org.mvel3.parser.ast.expr.RuleBody;
@@ -1407,6 +1408,15 @@ public class NoCommentEqualsVisitor implements GenericVisitor<Boolean, Visitable
     public Boolean visit(final WithStatement n, final Visitable arg) {
         final WithStatement n2 = (WithStatement) arg;
         if (!nodesEquals(n.getExpressions(), n2.getExpressions()))
+            return false;
+        if (!nodeEquals(n.getTarget(), n2.getTarget()))
+            return false;
+        return true;
+    }
+
+    public Boolean visit(final CompactWithExpression n, final Visitable arg) {
+        final CompactWithExpression n2 = (CompactWithExpression) arg;
+        if (!nodesEquals(n.getAssignments(), n2.getAssignments()))
             return false;
         if (!nodeEquals(n.getTarget(), n2.getTarget()))
             return false;

@@ -53,6 +53,7 @@ import org.mvel3.parser.ast.expr.TemporalLiteralInfiniteChunkExpr;
 import org.mvel3.parser.ast.expr.AbstractContextStatement;
 import org.mvel3.parser.ast.expr.ModifyStatement;
 import org.mvel3.parser.ast.expr.WithStatement;
+import org.mvel3.parser.ast.expr.CompactWithExpression;
 import org.mvel3.parser.ast.expr.OOPathChunk;
 import org.mvel3.parser.ast.expr.OOPathExpr;
 import org.mvel3.parser.ast.expr.RuleBody;
@@ -1567,6 +1568,17 @@ public class CloneVisitor implements GenericVisitor<Visitable, Object> {
         Expression target = cloneNode(n.getTarget(), arg);
         Comment comment = cloneNode(n.getComment(), arg);
         WithStatement r = new WithStatement(n.getTokenRange().orElse(null), target, expressions);
+        r.setComment(comment);
+        n.getOrphanComments().stream().map(Comment::clone).forEach(r::addOrphanComment);
+        copyData(n, r);
+        return r;
+    }
+
+    public Visitable visit(final CompactWithExpression n, final Object arg) {
+        NodeList<AssignExpr> assignments = cloneList(n.getAssignments(), arg);
+        NameExpr target = cloneNode(n.getTarget(), arg);
+        Comment comment = cloneNode(n.getComment(), arg);
+        CompactWithExpression r = new CompactWithExpression(n.getTokenRange().orElse(null), target, assignments);
         r.setComment(comment);
         n.getOrphanComments().stream().map(Comment::clone).forEach(r::addOrphanComment);
         copyData(n, r);

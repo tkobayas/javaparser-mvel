@@ -50,6 +50,7 @@ import org.mvel3.parser.ast.expr.TemporalLiteralInfiniteChunkExpr;
 import org.mvel3.parser.ast.expr.AbstractContextStatement;
 import org.mvel3.parser.ast.expr.ModifyStatement;
 import org.mvel3.parser.ast.expr.WithStatement;
+import org.mvel3.parser.ast.expr.CompactWithExpression;
 import org.mvel3.parser.ast.expr.OOPathChunk;
 import org.mvel3.parser.ast.expr.OOPathExpr;
 import org.mvel3.parser.ast.expr.RuleBody;
@@ -585,6 +586,10 @@ public class ObjectIdentityHashCodeVisitor implements GenericVisitor<Integer, Vo
 
     @Override
     public Integer visit(final WithStatement n, final Void arg) {
+        return n.hashCode();
+    }
+
+    public Integer visit(final CompactWithExpression n, final Void arg) {
         return n.hashCode();
     }
 

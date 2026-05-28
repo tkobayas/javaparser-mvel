@@ -73,6 +73,7 @@ import org.mvel3.parser.ast.expr.TemporalChunkExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralChunkExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralInfiniteChunkExpr;
+import org.mvel3.parser.ast.expr.CompactWithExpression;
 import org.mvel3.parser.ast.expr.WithStatement;
 import static com.github.javaparser.ast.Node.Parsedness.UNPARSABLE;
 import static com.github.javaparser.utils.PositionUtils.sortByBeginPosition;
@@ -1047,6 +1048,21 @@ public class DefaultPrettyPrinterVisitor implements VoidVisitor<Void> {
         printComment(n.getComment(), arg);
         printer.print("with (");
         visitContextStatement(n, arg);
+    }
+
+    @Override
+    public void visit(final CompactWithExpression n, final Void arg) {
+        printOrphanCommentsBeforeThisChildNode(n);
+        printComment(n.getComment(), arg);
+        n.getTarget().accept(this, arg);
+        printer.print("{");
+        for (int i = 0; i < n.getAssignments().size(); i++) {
+            n.getAssignments().get(i).accept(this, arg);
+            if (i < n.getAssignments().size() - 1) {
+                printer.print(", ");
+            }
+        }
+        printer.print("}");
     }
 
     private void visitContextStatement(AbstractContextStatement<?, ?> contextExpression, Void arg) {

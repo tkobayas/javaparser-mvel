@@ -340,6 +340,8 @@ public final class JavaParserMetaModel {
         modifyStatementMetaModel.getConstructorParameters().add(abstractContextStatementMetaModel.expressionsPropertyMetaModel);
         withStatementMetaModel.getConstructorParameters().add(abstractContextStatementMetaModel.targetPropertyMetaModel);
         withStatementMetaModel.getConstructorParameters().add(abstractContextStatementMetaModel.expressionsPropertyMetaModel);
+        compactWithExpressionMetaModel.getConstructorParameters().add(compactWithExpressionMetaModel.targetPropertyMetaModel);
+        compactWithExpressionMetaModel.getConstructorParameters().add(compactWithExpressionMetaModel.assignmentsPropertyMetaModel);
         oOPathChunkMetaModel.getConstructorParameters().add(oOPathChunkMetaModel.fieldPropertyMetaModel);
         oOPathChunkMetaModel.getConstructorParameters().add(oOPathChunkMetaModel.inlineCastPropertyMetaModel);
         oOPathChunkMetaModel.getConstructorParameters().add(oOPathChunkMetaModel.conditionPropertyMetaModel);
@@ -505,6 +507,7 @@ public final class JavaParserMetaModel {
         nodeMetaModels.add(whileStmtMetaModel);
         nodeMetaModels.add(wildcardTypeMetaModel);
         nodeMetaModels.add(withStatementMetaModel);
+        nodeMetaModels.add(compactWithExpressionMetaModel);
         nodeMetaModels.add(yieldStmtMetaModel);
     }
 
@@ -988,6 +991,10 @@ public final class JavaParserMetaModel {
         halfPointFreeExprMetaModel.getDeclaredPropertyMetaModels().add(halfPointFreeExprMetaModel.operatorPropertyMetaModel);
         halfPointFreeExprMetaModel.rightPropertyMetaModel = new PropertyMetaModel(halfPointFreeExprMetaModel, "right", com.github.javaparser.ast.expr.Expression.class, Optional.of(expressionMetaModel), false, false, true, false);
         halfPointFreeExprMetaModel.getDeclaredPropertyMetaModels().add(halfPointFreeExprMetaModel.rightPropertyMetaModel);
+        compactWithExpressionMetaModel.targetPropertyMetaModel = new PropertyMetaModel(compactWithExpressionMetaModel, "target", com.github.javaparser.ast.expr.NameExpr.class, Optional.of(nameExprMetaModel), false, false, false, false);
+        compactWithExpressionMetaModel.getDeclaredPropertyMetaModels().add(compactWithExpressionMetaModel.targetPropertyMetaModel);
+        compactWithExpressionMetaModel.assignmentsPropertyMetaModel = new PropertyMetaModel(compactWithExpressionMetaModel, "assignments", com.github.javaparser.ast.expr.AssignExpr.class, Optional.of(assignExprMetaModel), false, false, true, false);
+        compactWithExpressionMetaModel.getDeclaredPropertyMetaModels().add(compactWithExpressionMetaModel.assignmentsPropertyMetaModel);
         listCreationLiteralExpressionMetaModel.expressionsPropertyMetaModel = new PropertyMetaModel(listCreationLiteralExpressionMetaModel, "expressions", com.github.javaparser.ast.expr.Expression.class, Optional.of(expressionMetaModel), false, false, true, false);
         listCreationLiteralExpressionMetaModel.getDeclaredPropertyMetaModels().add(listCreationLiteralExpressionMetaModel.expressionsPropertyMetaModel);
         listCreationLiteralExpressionElementMetaModel.valuePropertyMetaModel = new PropertyMetaModel(listCreationLiteralExpressionElementMetaModel, "value", com.github.javaparser.ast.expr.Expression.class, Optional.of(expressionMetaModel), false, false, false, false);
@@ -1470,6 +1477,9 @@ public final class JavaParserMetaModel {
 
     @Generated("com.github.javaparser.generator.metamodel.NodeMetaModelGenerator")
     public static final WithStatementMetaModel withStatementMetaModel = new WithStatementMetaModel(Optional.of(abstractContextStatementMetaModel));
+
+    @Generated("com.github.javaparser.generator.metamodel.NodeMetaModelGenerator")
+    public static final CompactWithExpressionMetaModel compactWithExpressionMetaModel = new CompactWithExpressionMetaModel(Optional.of(expressionMetaModel));
 
     @Generated("com.github.javaparser.generator.metamodel.NodeMetaModelGenerator")
     public static final OOPathChunkMetaModel oOPathChunkMetaModel = new OOPathChunkMetaModel(Optional.of(expressionMetaModel));

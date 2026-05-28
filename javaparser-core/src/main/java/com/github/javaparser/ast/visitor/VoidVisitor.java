@@ -49,6 +49,7 @@ import org.mvel3.parser.ast.expr.TemporalLiteralExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralInfiniteChunkExpr;
 import org.mvel3.parser.ast.expr.AbstractContextStatement;
 import org.mvel3.parser.ast.expr.ModifyStatement;
+import org.mvel3.parser.ast.expr.CompactWithExpression;
 import org.mvel3.parser.ast.expr.WithStatement;
 import org.mvel3.parser.ast.expr.OOPathChunk;
 import org.mvel3.parser.ast.expr.OOPathExpr;
@@ -306,6 +307,8 @@ public interface VoidVisitor<A> {
     void visit(ModifyStatement n, A arg);
 
     void visit(WithStatement n, A arg);
+
+    void visit(CompactWithExpression n, A arg);
 
     void visit(OOPathChunk n, A arg);
 

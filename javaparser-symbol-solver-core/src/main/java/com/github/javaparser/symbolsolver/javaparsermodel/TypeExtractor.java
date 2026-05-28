@@ -91,6 +91,7 @@ import org.mvel3.parser.ast.expr.RulePattern;
 import org.mvel3.parser.ast.expr.TemporalLiteralChunkExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralExpr;
 import org.mvel3.parser.ast.expr.TemporalLiteralInfiniteChunkExpr;
+import org.mvel3.parser.ast.expr.CompactWithExpression;
 import org.mvel3.parser.ast.expr.WithStatement;
 
 public class TypeExtractor extends DefaultVisitorAdapter {
@@ -338,6 +339,11 @@ public class TypeExtractor extends DefaultVisitorAdapter {
     @Override
     public ResolvedType visit(WithStatement node, Boolean solveLambdas) {
         return ResolvedVoidType.INSTANCE;
+    }
+
+    @Override
+    public ResolvedType visit(CompactWithExpression node, Boolean solveLambdas) {
+        return node.getTarget().accept(this, solveLambdas);
     }
 
     @Override
